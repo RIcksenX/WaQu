@@ -39,6 +39,18 @@ const _layout = () => {
                 headerShown: false
              }}
         />
+        <Tabs.Screen
+        name="LoginScreen"
+        options={{
+          title: 'Log In'
+        }}
+        />
+        <Tabs.Screen
+            name="SignUpScreen"
+            options={{
+            title: 'SignUp'
+         }}
+        />
     </Tabs>
   )
 }
