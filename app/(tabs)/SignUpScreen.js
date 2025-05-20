@@ -1,37 +1,86 @@
-// SignupScreen.js
 import { useState } from 'react';
 import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, View } from 'react-native';
-
 
 export default function SignupScreen() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   const handleSignup = () => {
-    if (!username || !email || !password) {
-      Alert.alert("All fields are required!");
-      return;
+    let isValid = true;
+
+    // Reset errors
+    setUsernameError('');
+    setEmailError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
+
+    // Username validation
+    if (!username) {
+      setUsernameError('Username is required.');
+      isValid = false;
+    } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+      setUsernameError('Username must be alphanumeric.');
+      isValid = false;
+    }
+
+    // Email validation
+    if (!email) {
+      setEmailError('Email is required.');
+      isValid = false;
+    } else if (!/^[\w.+\-]+@gmail\.com$/.test(email)) {
+      setEmailError('Email must end with @gmail.com.');
+      isValid = false;
+    }
+
+    // Password validation
+    if (!password) {
+      setPasswordError('Password is required.');
+      isValid = false;
+    } else if (!/^(?=.*\d).{8,16}$/.test(password)) {
+      setPasswordError(
+        'Password must be 8–16 characters and include at least one number.'
+      );
+      isValid = false;
+    }
+
+    // Confirm password
+    if (!confirmPassword) {
+      setConfirmPasswordError('Please confirm your password.');
+      isValid = false;
+    } else if (password !== confirmPassword) {
+      setConfirmPasswordError('Passwords do not match.');
+      isValid = false;
     }
 
     // Here you can add API call
-    Alert.alert("Signup Successful!");
+    if (isValid) {
+      Alert.alert('Signup Successful!');
+    }
   };
 
   return (
-    <><ImageBackground
-      source={require('@/assets/images/SignIn_Wallpaper.png')} // adjust path as needed
+    <ImageBackground
+      source={require('@/assets/images/SignIn_Wallpaper.png')}
       style={styles.background}
       resizeMode="cover"
-    ></ImageBackground>
-    <View style={styles.container}>
+    >
+      <View style={styles.container}>
         <Text style={styles.title}>Sign Up</Text>
 
         <TextInput
           style={styles.input}
           placeholder="Username"
           value={username}
-          onChangeText={setUsername} />
+          onChangeText={setUsername}
+        />
+        {usernameError ? <Text style={styles.error}>{usernameError}</Text> : null}
 
         <TextInput
           style={styles.input}
@@ -39,24 +88,33 @@ export default function SignupScreen() {
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
-          autoCapitalize="none" />
+          autoCapitalize="none"
+        />
+        {emailError ? <Text style={styles.error}>{emailError}</Text> : null}
 
         <TextInput
           style={styles.input}
           placeholder="Password"
           value={password}
           onChangeText={setPassword}
-          secureTextEntry />
+          secureTextEntry
+        />
+        {passwordError ? <Text style={styles.error}>{passwordError}</Text> : null}
 
-          <TextInput
+        <TextInput
           style={styles.input}
           placeholder="Confirm Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry />
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+        />
+        {confirmPasswordError ? (
+          <Text style={styles.error}>{confirmPasswordError}</Text>
+        ) : null}
 
         <Button title="Sign Up" onPress={handleSignup} />
-      </View></>
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -65,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  overlay: {
+  container: {
     backgroundColor: 'rgba(255, 255, 255, 0.85)',
     margin: 20,
     padding: 20,
@@ -76,17 +134,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: 'white'  
+    color: 'black',
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
-    marginBottom: 15,
-    padding: 10, // adds padding inside all sides
+    marginBottom: 10,
+    padding: 10,
     borderRadius: 8,
     backgroundColor: '#fff',
-    marginLeft: 20,
-    marginRight: 20,
   },
-
+  error: {
+    color: 'red',
+    fontSize: 13,
+    marginBottom: 10,
+    marginLeft: 5,
+  },
 });
