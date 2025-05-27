@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, View } from 'react-native';
 

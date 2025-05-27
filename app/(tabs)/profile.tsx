@@ -6,8 +6,8 @@ const profile = () => {
   return (
     <View style={{ margin:100 }}>
       <Text>profile</Text>
-      <Link href="../LoginScreen">login</Link>
-      <Link href="../SignUpScreen">signup</Link>
+      <Link href="../signin">login</Link>
+      <Link href="../signup">signup</Link>
 
     </View>
   )
