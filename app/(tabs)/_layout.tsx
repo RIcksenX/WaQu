@@ -12,9 +12,9 @@ const _layout = () => {
              }}
         />
         <Tabs.Screen
-            name='log'
+            name='alert'
             options={{ 
-                title: 'Log',
+                title: 'Alert',
                 headerShown: false
              }}
         />
@@ -26,16 +26,16 @@ const _layout = () => {
              }}
         />
         <Tabs.Screen
-            name='profile'
+            name='log'
             options={{ 
-                title: 'Profile',
+                title: 'Log',
                 headerShown: false
              }}
         />
         <Tabs.Screen
-            name='alert'
+            name='profile'
             options={{ 
-                title: 'Alert',
+                title: 'Profile',
                 headerShown: false
              }}
         />
